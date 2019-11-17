@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds     #-}
 {-# LANGUAGE TypeOperators #-}
 
-module ServantApi
+module ServantUtil.Api
   ( BaseCrudApi
   , GetEntitiesApi
   , PostEntitiesApi
