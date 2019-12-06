@@ -16,7 +16,7 @@ import           Servant
 type BaseCrudApi a i
    = Get '[ JSON] [(i, a)] -- list 'a's
       :<|> ReqBody '[ JSON] a :> PostNoContent '[ JSON] NoContent -- add an 'a'
-      :<|> Capture "id" i :> (Get '[ JSON] a -- view an 'a' given its "identifier" of type 'i'
+      :<|> Capture "id" i :> (Get '[ JSON] (Maybe a) -- view an 'a' given its "identifier" of type 'i'
                                :<|> ReqBody '[ JSON] a :> PutNoContent '[ JSON] NoContent -- update an 'a'
                                :<|> DeleteNoContent '[ JSON] NoContent -- delete an 'a'
                               )
