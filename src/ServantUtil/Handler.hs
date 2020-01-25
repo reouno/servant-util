@@ -13,6 +13,7 @@ import           Data.Maybe             ( listToMaybe )
 import           Servant
 
 import           ServantUtil.Api        ( BaseCrudApi )
+import           ServantUtil.Types      ( EntityRecord (..) )
 
 class (FromJSON a, ToJSON a) =>
       Entity a
@@ -27,7 +28,7 @@ class DataPool a
 class (Entity a, EntityKey i, Eq i) =>
       BaseCrudApiPureHandler a i
   where
-  baseCrudApiPureHandler :: [(i, a)] -> Server (BaseCrudApi a i)
+  baseCrudApiPureHandler :: [EntityRecord i a] -> Server (BaseCrudApi a i)
   baseCrudApiPureHandler entityRecords =
     getEntities :<|> newEntity :<|> operations
     where
@@ -35,6 +36,7 @@ class (Entity a, EntityKey i, Eq i) =>
       newEntity = error "newEntity is not implemented yet"
       operations id' = getEntity id' :<|> updateEntity id' :<|> deleteEntity id'
       getEntity id' =
-        liftIO $ return $ listToMaybe [x | (i, x) <- entityRecords, i == id']
+        liftIO $
+        return $ listToMaybe [x | EntityRecord i x <- entityRecords, i == id']
       updateEntity id' = error "updateEntity is not implemented yet"
       deleteEntity id' = error "deleteEntity is not implemented yet"

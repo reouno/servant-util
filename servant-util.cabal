@@ -18,6 +18,7 @@ library
   exposed-modules:     ServantUtil
                      , ServantUtil.Api
                      , ServantUtil.Handler
+                     , ServantUtil.Types
   build-depends:       base >= 4.7 && < 5
                      , aeson
                      , servant-server
